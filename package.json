@@ -1,0 +1,37 @@
+{
+  "name": "haohaodo-api",
+  "version": "1.0.0",
+  "description": "haohaodo-api",
+  "main": "main.js",
+  "scripts": {
+    "serve": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/ChangLCS/haohaodo-api.git"
+  },
+  "keywords": [
+    "koa2",
+    "node"
+  ],
+  "author": "ChangLCS <584911924@qq.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/ChangLCS/haohaodo-api/issues"
+  },
+  "homepage": "https://gitlab.com/ChangLCS/haohaodo-api#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "jsonwebtoken": "^8.3.0",
+    "koa": "2.5.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.6",
+    "log4js": "^3.0.5",
+    "mysql": "^2.16.0",
+    "querystring": "^0.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.5.0"
+  }
+}
