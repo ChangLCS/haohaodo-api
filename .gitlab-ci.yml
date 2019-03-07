@@ -1,0 +1,13 @@
+stages:
+  - master
+
+prd_master:
+  stage: master
+  tags:
+    - master
+  only:
+    - master
+  script:
+    - cp -rf ./. /data/build/$CI_COMMIT_REF_NAME/$CI_PROJECT_NAME/
+    - cd /data/build/$CI_COMMIT_REF_NAME/$CI_PROJECT_NAME
+    - ls

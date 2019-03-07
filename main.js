@@ -1,6 +1,7 @@
 const Koa = require('koa');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('koa-bodyparser');
+const cros = require('koa2-cors');
 
 const logger = require('./logger');
 const router = require('./router');
@@ -8,19 +9,22 @@ const config = require('./config');
 
 const app = new Koa();
 
-const ctxCallBack = (ctx) => {
-  ctx.set('Access-Control-Allow-Origin', ctx.request.header.origin);
-  ctx.set('Access-Control-Allow-Credentials', true);
-  ctx.set('Access-Control-Max-Age', 3600);
-  ctx.set('Access-Control-Allow-Methods', 'OPTIONS, GET, PUT, POST, DELETE');
-  ctx.set('Access-Control-Allow-Headers', 'x-requested-with, accept, origin, content-type');
-};
+app.use(
+  cros({
+    origin: (ctx) => {
+      return ctx.request.header.origin;
+    },
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+    maxAge: 3600,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE', 'OPTION', 'DELETE'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  }),
+);
 
 //  打印ip，顺便验一下token
 app.use(async (ctx, next) => {
   logger.trace(`${ctx.ip}----${ctx.url}`);
-
-  ctxCallBack(ctx);
 
   if (router.noTokenPath.indexOf(ctx.path) === -1) {
     const token = ctx.query.accessToken;
@@ -41,9 +45,9 @@ app.use(bodyParser());
 app.use(router.router.routes());
 app.use(router.router.allowedMethods());
 
-app.use(async (ctx, next) => {
-  await next();
-});
+// app.use(async (ctx, next) => {
+//   await next();
+// });
 
 app.listen(3000, () => {
   logger.debug('server listen: ----- 3000');

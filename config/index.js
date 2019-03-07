@@ -71,4 +71,10 @@ module.exports = {
   setResponseError,
   resourceList: ['深圳', '东莞', '肇庆'],
   isProvince,
+  wechat: {
+    appID: 'wx0c7b7eee02e1a20c', //  公众号里取
+    appSecret: '451e6c7e08c11c77f1091679ea1c4271', //  公众号里取
+    token: 'wechatTokenChangLCS', //  自定义token
+    EncodingAESKey: 'aFWx5GOERLq5WimqFs0osMAqzFbL4tqEUtKlJYMQOv1', //  微信消息加密密钥
+  },
 };
