@@ -15,9 +15,9 @@ const run = async (ctx, next) => {
   let sha = sha1(str);
   logger.debug(sha, signature);
   if (sha == signature) {
-    this.body = echostr;
+    ctx.body = echostr;
   } else {
-    this.body = 'wrong';
+    ctx.body = 'wrong';
   }
 
   next();
