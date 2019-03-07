@@ -5,9 +5,9 @@ const logger = require('../logger');
 const run = async (ctx, next) => {
   const token = config.wechat.token;
   const signature = ctx.query.signature;
-  const nonce = this.query.nonce;
-  const timestamp = this.query.timestamp;
-  const echostr = this.query.echostr;
+  const nonce = ctx.query.nonce;
+  const timestamp = ctx.query.timestamp;
+  const echostr = ctx.query.echostr;
 
   logger.debug(token, signature, nonce, timestamp, echostr);
 
