@@ -45,9 +45,9 @@ app.use(bodyParser());
 app.use(router.router.routes());
 app.use(router.router.allowedMethods());
 
-// app.use(async (ctx, next) => {
-//   await next();
-// });
+app.use(async (ctx, next) => {
+  await next();
+});
 
 app.listen(3000, () => {
   logger.debug('server listen: ----- 3000');
