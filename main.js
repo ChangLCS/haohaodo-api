@@ -23,30 +23,16 @@ app.use(
 );
 
 //  打印ip，顺便验一下token
-// app.use(async (ctx, next) => {
-//   logger.trace(`${ctx.ip}----${ctx.url}`);
-
-// if (router.noTokenPath.indexOf(ctx.path) === -1) {
-//   const token = ctx.query.accessToken;
-//   await jwt.verify(token, 'secret', async (err) => {
-//     if (err) {
-//       logger.error('token 失效', err);
-//       ctx.body = config.setResponseError('没有token或者token已过期', 401);
-//     } else {
-//       await next();
-//     }
-//   });
-// } else {
-// await next();
-// }
-// });
+app.use(async (ctx, next) => {
+  logger.trace(`${ctx.header['x-real-ip']}----${ctx.url}`); //  x-real-ip 是 nginx 代理前的原始ip
+  await next();
+});
 
 app.use(bodyParser());
 app.use(router.router.routes());
 app.use(router.router.allowedMethods());
 
 app.use(async (ctx, next) => {
-  logger.trace(`${ctx.header['x-real-ip']}----${ctx.url}`); //  x-real-ip 是 nginx 代理前的原始ip
   await next();
 });
 
