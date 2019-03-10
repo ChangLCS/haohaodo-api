@@ -46,8 +46,7 @@ app.use(router.router.routes());
 app.use(router.router.allowedMethods());
 
 app.use(async (ctx, next) => {
-  logger.trace(`${ctx.ip}----${ctx.url}`);
-  logger.debug(ctx);
+  logger.trace(`${ctx.header['x-real-ip']}----${ctx.url}`); //  x-real-ip 是 nginx 代理前的原始ip
   await next();
 });
 
