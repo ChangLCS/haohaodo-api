@@ -14,5 +14,6 @@ module.exports = mysql.createConnection({
   password: '', # 密码
   port: '3306', # 端口，一般是3306
   database: '', # 数据库
+  dateStrings: 'DATETIME',  # 避免时区问题
 });
 ```

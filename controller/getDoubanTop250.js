@@ -4,7 +4,6 @@
 'use strict';
 
 const axios = require('axios');
-const sql = require('../sql');
 const config = require('../config');
 const logger = require('../logger');
 

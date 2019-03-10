@@ -8,6 +8,7 @@ create table douban_movie
   title VARCHAR(255) DEFAULT NULL COMMENT '名称',
   original_title VARCHAR(255) DEFAULT NULL COMMENT '原名',
   aka TEXT DEFAULT NULL COMMENT '别称',
+  countries VARCHAR(255) DEFAULT NULL COMMENT '国家',
   years INT(11) DEFAULT NULL COMMENT '年份',
   summary TEXT DEFAULT NULL COMMENT '描述',
   rating VARCHAR(255) DEFAULT NULL COMMENT '评分',

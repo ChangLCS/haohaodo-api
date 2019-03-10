@@ -9,7 +9,7 @@ const logger = require('../logger');
 //  校验电影是否存在电影表里
 const check = (did) => {
   return new Promise((resolve) => {
-    sql.query('select * from douban_movie where d_id = ?', [did], (error, res) => {
+    sql.query('select id from douban_movie where d_id = ?', [did], (error, res) => {
       if (error) {
         logger.error(error);
         reject(error);
