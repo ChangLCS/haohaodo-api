@@ -10,6 +10,46 @@ const logger = require('../logger');
 const doPeople = require('../utils/doPeople');
 const doMovie = require('../utils/doMovie');
 
+/**
+ * @argument 获取影人表id
+ * @type 1 导演 2 演员
+ */
+const getPeopleIds = async (data, type) => {
+  const ids = [];
+  for (let i = 0; i < data.length; i += 1) {
+    const item = data[i];
+    let id = await doPeople.check(item.id);
+    if (!id) {
+      id = await doPeople.insert({
+        ...item,
+        images: item.avatars ? item.avatars.large : '',
+        type,
+      });
+    }
+    ids.push(id);
+  }
+  return ids;
+};
+
+//  插入电影表数据
+const insertData = async (data) => {
+  const directors = await getPeopleIds(data.directors, 1); //  导演ids
+  const casts = await getPeopleIds(data.casts, 2); //  演员ids
+
+  const id = await doMovie.insert({
+    ...data,
+    aka: '',
+    years: data.year,
+    summary: '',
+    rating: data.rating ? data.rating.average : '',
+    images: data.images ? data.images.large : '',
+    casts: casts.join(','),
+    directors: directors.join(','),
+    genres: data.genres.join(','),
+  });
+  return id;
+};
+
 const run = async (ctx, next) => {
   await axios
     .get('http://api.douban.com/v2/movie/top250', {
@@ -20,43 +60,6 @@ const run = async (ctx, next) => {
     })
     .then(async (res) => {
       const movies = res.data.subjects;
-
-      //  获取影人表id
-      const getPeopleIds = async (data, type) => {
-        const ids = [];
-        for (let i = 0; i < data.length; i += 1) {
-          const item = data[i];
-          let id = await doPeople.check(item.id);
-          if (!id) {
-            id = await doPeople.insert({
-              ...item,
-              images: item.avatars ? item.avatars.large : '',
-              type,
-            });
-          }
-          ids.push(id);
-        }
-        return ids;
-      };
-
-      //  插入电影表数据
-      const insertData = async (data) => {
-        const directors = await getPeopleIds(data.directors, 1); //  导演ids
-        const casts = await getPeopleIds(data.casts, 2); //  演员ids
-
-        const id = await doMovie.insert({
-          ...data,
-          aka: '',
-          years: data.year,
-          summary: '',
-          rating: data.rating ? data.rating.average : '',
-          images: data.images ? data.images.large : '',
-          casts: casts.join(','),
-          directors: directors.join(','),
-          genres: data.genres.join(','),
-        });
-        return id;
-      };
 
       for (let i = 0; i < movies.length; i += 1) {
         const item = movies[i];
@@ -74,4 +77,4 @@ const run = async (ctx, next) => {
     });
 };
 
-module.exports = { run };
+module.exports = { run, getPeopleIds, insertData };
