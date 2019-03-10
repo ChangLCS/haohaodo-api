@@ -17,3 +17,14 @@ module.exports = mysql.createConnection({
   dateStrings: 'DATETIME',  # 避免时区问题
 });
 ```
+
+### /wechat/config.js 配置公众号参数
+
+```
+module.exports = {
+  appID: '', //  公众号里取
+  appSecret: '', //  公众号里取
+  token: '', //  自定义token
+  EncodingAESKey: '', //  微信消息加密密钥
+};
+```

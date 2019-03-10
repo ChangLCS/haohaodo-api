@@ -34,5 +34,6 @@ yarn.lock
 *.ipa
 
 /sql/index.js
+/wechat/config.js
 
 # *.iml

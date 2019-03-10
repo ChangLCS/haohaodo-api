@@ -1,9 +1,9 @@
 const sha1 = require('sha1');
-const config = require('../config');
+const wechatConfig = require('../wechat/config');
 const logger = require('../logger');
 
 const run = async (ctx, next) => {
-  const token = config.wechat.token;
+  const token = wechatConfig.token;
   const signature = ctx.query.signature;
   const nonce = ctx.query.nonce;
   const timestamp = ctx.query.timestamp;
