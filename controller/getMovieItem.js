@@ -54,7 +54,7 @@ const getDoubanItem = (form) =>
           arr,
           (error) => {
             if (error) {
-              reject(error.message);
+              reject(error);
             } else {
               resolve(resForm);
             }
@@ -76,6 +76,10 @@ const getItem = (id) =>
       } else {
         try {
           let data = res[0];
+          if (!data) {
+            reject({ message: '参数无效' });
+            return;
+          }
           if (!data.aka && !data.summary) {
             data = await getDoubanItem(data);
           }
@@ -106,6 +110,7 @@ const run = async (ctx, next) => {
     const data = await getItem(id);
     ctx.body = config.setResponseSuccess(data);
   } catch (error) {
+    logger.error(error.message);
     ctx.body = config.setResponseError(error.message);
   }
   await next();
