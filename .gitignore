@@ -33,4 +33,6 @@ yarn.lock
 *.apk
 *.ipa
 
+/sql/index.js
+
 # *.iml
