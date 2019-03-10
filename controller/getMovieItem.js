@@ -10,7 +10,10 @@ const logger = require('../logger');
 
 const doPeople = require('../utils/doPeople');
 
-//  获取影人表id
+/**
+ * @argument 获取影人表id
+ * @type 1 导演 2 演员
+ */
 const getPeopleIds = async (data, type) => {
   const ids = [];
   for (let i = 0; i < data.length; i += 1) {
@@ -47,7 +50,7 @@ const getDoubanItem = (form) =>
     logger.debug('豆瓣获取详情接口', url);
     axios.get(url).then(async (res) => {
       const data = res.data;
-      const casts = await getPeopleIds(data.casts, 1);
+      const casts = await getPeopleIds(data.casts, 2);
 
       const resForm = {
         ...form,
