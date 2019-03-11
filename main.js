@@ -24,7 +24,7 @@ app.use(
 
 //  打印ip，顺便验一下token
 app.use(async (ctx, next) => {
-  logger.trace(`${ctx.header['x-real-ip']}----${ctx.url}`); //  x-real-ip 是 nginx 代理前的原始ip
+  logger.trace(`${ctx.header['x-real-ip'] || ctx.ip}----${ctx.host}----${ctx.url}`); //  x-real-ip 是 nginx 代理前的原始ip
   await next();
 });
 
