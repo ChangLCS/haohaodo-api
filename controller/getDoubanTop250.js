@@ -52,7 +52,7 @@ const insertData = async (data) => {
 
 const run = async (ctx, next) => {
   await axios
-    .get('http://api.douban.com/v2/movie/top250', {
+    .get('https://api.douban.com/v2/movie/top250', {
       params: {
         start: ctx.query.start || 0,
         count: 100,
@@ -61,15 +61,19 @@ const run = async (ctx, next) => {
     .then(async (res) => {
       const movies = res.data.subjects;
 
-      for (let i = 0; i < movies.length; i += 1) {
-        const item = movies[i];
-        let id = await doMovie.check(item.id);
-        if (!id) {
-          id = await insertData(item);
+      try {
+        for (let i = 0; i < movies.length; i += 1) {
+          const item = movies[i];
+          let id = await doMovie.check(item.id);
+          if (!id) {
+            id = await insertData(item);
+          }
         }
+        ctx.body = config.setResponseSuccess();
+      } catch (error) {
+        ctx.body = config.setResponseError(error);
       }
 
-      ctx.body = config.setResponseSuccess();
       await next();
     })
     .catch((err) => {
