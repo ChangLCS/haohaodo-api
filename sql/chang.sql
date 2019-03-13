@@ -29,22 +29,18 @@ create table douban_people
   update_time datetime DEFAULT NULL COMMENT '更新时间',
 )
 
-create table wx_users
-(
-  id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  openId VARCHAR(255) DEFAULT NULL,
-  nickName VARCHAR(255) DEFAULT NULL,
-  gender INT(11) DEFAULT NULL,
-  city VARCHAR(255) DEFAULT NULL,
-  province VARCHAR(255) DEFAULT NULL,
-  country VARCHAR(255) DEFAULT NULL,
-  avatarUrl VARCHAR(255) DEFAULT NULL,
-  unionId VARCHAR(255) DEFAULT NULL,
-  phone VARCHAR(255) DEFAULT NULL,
-  idNo VARCHAR(255) DEFAULT NULL,
-  studentNo VARCHAR(255) DEFAULT NULL,
-  PRIMARY KEY(id)
-)
+CREATE TABLE wx_users (
+  id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  openid varchar(255) DEFAULT NULL,
+  unionid varchar(255) DEFAULT NULL,
+  nick_name varchar(255) DEFAULT NULL,
+  gender int(11) DEFAULT NULL COMMENT '1 男 2 女',
+  city varchar(255) DEFAULT NULL,
+  province varchar(255) DEFAULT NULL,
+  country varchar(255) DEFAULT NULL,
+  avatar_url text DEFAULT NULL,
+  update_time datetime DEFAULT NULL COMMENT '更新时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create TABLE wx_orders (
   id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
