@@ -1,7 +1,5 @@
 const jwt = require('jsonwebtoken');
-
 const axios = require('axios');
-const sql = require('../sql');
 
 const config = require('../config');
 const wechatConfig = require('../wechat/config');
@@ -29,7 +27,7 @@ const run = async (ctx, next) => {
     })
     .then(async (res) => {
       const form = res.data;
-      logger.trace(form);
+
       let id = null;
       try {
         const data = await userInfo.getUserInfo(form);
@@ -37,36 +35,23 @@ const run = async (ctx, next) => {
       } catch (error) {
         id = await userInfo.insertUserInfo(form);
       }
-      ctx.body = config.setResponseSuccess(id);
+      //  根据用户id，微信提供的session，加密合成access_token
+      const token = jwt.sign(
+        {
+          userId: id,
+          sessionKey: form.session_key,
+        },
+        config.tokenMsg,
+        //  一天的有效token
+        { expiresIn: 60 * 60 * 24 * 1 },
+      );
+
+      ctx.body = config.setResponseSuccess(token);
       await next();
     })
     .catch((error) => {
       logger.error(error);
     });
-
-  //  验证的是与流向的登录用户
-  // https: await checkCode(key)
-  //   .then((res) => {
-  //     const canAccess = res.data.data.canAccess;
-  //     if (canAccess) {
-  //       const token = jwt.sign(
-  //         {
-  //           data: key,
-  //         },
-  //         'secret',
-  //         { expiresIn: 60 * 60 * 24 * 7 },
-  //         //  七天的有效token
-  //       );
-  //       logger.debug(token);
-  //       ctx.body = config.setResponseSuccess(token);
-  //     } else {
-  //       ctx.body = config.setResponseError('验证失败，重新登录', 401);
-  //     }
-  //     next();
-  //   })
-  //   .catch((res) => {
-  //     logger.error(res.data);
-  //   });
 };
 
 module.exports = { run };

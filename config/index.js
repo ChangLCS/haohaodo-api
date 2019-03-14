@@ -10,20 +10,18 @@ const responseSuccess = {
   };
 
 //  设置回调成功的结果
-const setResponseSuccess = (ret, message) =>
-  Object.assign(
-    {},
-    responseSuccess,
-    { result: ret },
-    { message: message || responseSuccess.message },
-  );
+const setResponseSuccess = (ret = null, message) => ({
+  ...responseSuccess,
+  result: ret,
+  message: message || responseSuccess.message,
+});
 
 //  设置回调失败的结果
-const setResponseError = (message, code) =>
-  Object.assign({}, responseError, {
-    message: message || responseError.message,
-    code: code || responseError.code,
-  });
+const setResponseError = (message, code) => ({
+  ...responseError,
+  message: message || responseError.message,
+  code: code || responseError.code,
+});
 
 //  省
 const provinceList = [
@@ -70,4 +68,5 @@ module.exports = {
   setResponseSuccess,
   setResponseError,
   isProvince,
+  tokenMsg: 'LiChangSheng',
 };
