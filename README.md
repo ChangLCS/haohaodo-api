@@ -9,12 +9,12 @@
 const mysql = require('mysql');
 
 module.exports = mysql.createConnection({
-  host: '', # 数据库地址
-  user: '', # 用户名
-  password: '', # 密码
-  port: '3306', # 端口，一般是3306
-  database: '', # 数据库
-  dateStrings: 'DATETIME',  # 避免时区问题
+  host: '', // 数据库地址
+  user: '', // 用户名
+  password: '', // 密码
+  port: '3306', // 端口，一般是3306
+  database: '', // 数据库
+  dateStrings: 'DATETIME',  // 避免时区问题
 });
 ```
 
@@ -26,5 +26,8 @@ module.exports = {
   appSecret: '', //  公众号里取
   token: '', //  自定义token
   EncodingAESKey: '', //  微信消息加密密钥
+
+  programID: '', //  小程序appid
+  programSecret: '', //小程序appSecret
 };
 ```
