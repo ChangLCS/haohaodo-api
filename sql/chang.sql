@@ -39,7 +39,8 @@ CREATE TABLE wx_users (
   province varchar(255) DEFAULT NULL,
   country varchar(255) DEFAULT NULL,
   avatar_url text DEFAULT NULL,
-  update_time datetime DEFAULT NULL COMMENT '更新时间'
+  update_time datetime DEFAULT NULL COMMENT '更新时间',
+  create_time datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create TABLE wx_orders (
