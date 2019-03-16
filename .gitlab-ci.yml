@@ -10,4 +10,5 @@ prd_master:
   script:
     - cp -rf ./. /data/build/$CI_COMMIT_REF_NAME/$CI_PROJECT_NAME/
     - cd /data/build/$CI_COMMIT_REF_NAME/$CI_PROJECT_NAME
+    - npm install
     - ls
