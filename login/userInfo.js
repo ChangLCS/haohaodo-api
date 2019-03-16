@@ -45,6 +45,7 @@ class userinfo {
   //  根据用户id更新
   updateUserInfo(data) {
     const arr = [
+      data.unionId,
       data.nickName,
       data.gender,
       data.city,
@@ -55,7 +56,7 @@ class userinfo {
       data.id,
     ];
     const sqlstr =
-      'UPDATE wx_users SET nick_name = ?, gender = ?, city = ?, province = ?, country = ?, avatar_url = ?, update_time = ? WHERE id = ?';
+      'UPDATE wx_users SET unionid = ?, nick_name = ?, gender = ?, city = ?, province = ?, country = ?, avatar_url = ?, update_time = ? WHERE id = ?';
     return new Promise((resolve, reject) => {
       sql.query(sqlstr, arr, (error, res) => {
         if (error) {
