@@ -13,7 +13,7 @@ const getDoubanTop250 = require('./getDoubanTop250');
 //  获取影人表信息
 const getPeopleArr = (ids) =>
   new Promise((resolve) => {
-    sql.query(`select * from douban_people where id in (${ids})`, (error, res) => {
+    sql.query(`select * from douban_people where id in (${ids || 0})`, (error, res) => {
       if (error) {
         logger.error(error.message);
       } else {
