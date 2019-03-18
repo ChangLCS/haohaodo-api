@@ -18,7 +18,7 @@ const getPeopleIds = async (data, type) => {
   const ids = [];
   for (let i = 0; i < data.length; i += 1) {
     const item = data[i];
-    let id = await doPeople.check(item.id);
+    let id = await doPeople.check(item.id, item.name);
     if (!id) {
       id = await doPeople.insert({
         ...item,

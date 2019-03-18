@@ -53,6 +53,7 @@ const run = async (ctx, next) => {
         }
         logger.trace('查找的电影id', ids.join(','));
         const data = await getList(ids.join(','));
+        data.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id));
         ctx.body = config.setResponseSuccess(data);
       } catch (error) {
         ctx.body = config.setResponseError(error);

@@ -31,7 +31,7 @@ const insert = (data) => {
     title: data.title,
     original_title: data.original_title,
     aka: data.aka,
-    years: data.years,
+    years: data.years || null,
     summary: data.summary,
     rating: data.rating,
     images: data.images,

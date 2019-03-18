@@ -7,18 +7,31 @@ const sql = require('../sql');
 const logger = require('../logger');
 
 //  校验影人是否存在影人表里
-const check = (did) => {
+const check = (did, name) => {
   return new Promise((resolve) => {
     sql.query('select id from douban_people where d_id = ?', [did], (error, res) => {
       if (error) {
         logger.error(error);
         reject(error);
+      } else if (res && res.length) {
+        resolve(res[0].id);
+      } else if (name) {
+        sql.query(
+          'select id from douban_people where d_id IS NOT NULL AND name = ?',
+          [name],
+          (nameError, nameRes) => {
+            if (nameError) {
+              logger.error(nameError);
+              reject(nameError);
+            } else if (nameRes && nameRes.length) {
+              resolve(nameRes[0].id);
+            } else {
+              resolve(null);
+            }
+          },
+        );
       } else {
-        if (res && res.length) {
-          resolve(res[0].id);
-        } else {
-          resolve(null);
-        }
+        resolve(null);
       }
     });
   });
