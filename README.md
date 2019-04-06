@@ -8,7 +8,8 @@
 
 const mysql = require('mysql');
 
-module.exports = mysql.createConnection({
+//  以连接池的方式连接mysql
+module.exports = mysql.createPool({
   host: '', // 数据库地址
   user: '', // 用户名
   password: '', // 密码
